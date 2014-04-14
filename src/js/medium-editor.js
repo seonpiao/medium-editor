@@ -9,7 +9,7 @@ if (typeof module === 'object') {
     module.exports = MediumEditor;
 }
 
-(function (window, document) {
+(function(window, document) {
     'use strict';
 
     function extend(b, a) {
@@ -119,7 +119,7 @@ if (typeof module === 'object') {
         // by rg89
         isIE: ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null))),
 
-        init: function (elements, options) {
+        init: function(elements, options) {
             this.elements = typeof elements === 'string' ? document.querySelectorAll(elements) : elements;
             if (this.elements.nodeType === 1) {
                 this.elements = [this.elements];
@@ -133,7 +133,7 @@ if (typeof module === 'object') {
             return this.setup();
         },
 
-        setup: function () {
+        setup: function() {
             this.isActive = true;
             this.initElements()
                 .bindSelect()
@@ -142,7 +142,7 @@ if (typeof module === 'object') {
                 .bindWindowActions();
         },
 
-        initElements: function () {
+        initElements: function() {
             var i,
                 addToolbar = false;
             for (i = 0; i < this.elements.length; i += 1) {
@@ -166,7 +166,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        serialize: function () {
+        serialize: function() {
             var i,
                 elementid,
                 content = {};
@@ -186,7 +186,7 @@ if (typeof module === 'object') {
          * @param {string} funcName name of the function to call
          * @param [args] arguments passed into funcName
          */
-        callExtensions: function (funcName) {
+        callExtensions: function(funcName) {
             if (arguments.length < 1) {
                 return;
             }
@@ -205,9 +205,9 @@ if (typeof module === 'object') {
             }
         },
 
-        bindParagraphCreation: function (index) {
+        bindParagraphCreation: function(index) {
             var self = this;
-            this.elements[index].addEventListener('keyup', function (e) {
+            this.elements[index].addEventListener('keyup', function(e) {
                 var node = getSelectionStart(),
                     tagName;
                 if (node && node.getAttribute('data-medium-element') && node.children.length === 0 && !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
@@ -230,7 +230,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        isListItemChild: function (node) {
+        isListItemChild: function(node) {
             var parentNode = node.parentNode,
                 tagName = parentNode.tagName.toLowerCase();
             while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
@@ -247,9 +247,9 @@ if (typeof module === 'object') {
             return false;
         },
 
-        bindReturn: function (index) {
+        bindReturn: function(index) {
             var self = this;
-            this.elements[index].addEventListener('keypress', function (e) {
+            this.elements[index].addEventListener('keypress', function(e) {
                 if (e.which === 13) {
                     if (self.options.disableReturn || this.getAttribute('data-disable-return')) {
                         e.preventDefault();
@@ -264,8 +264,8 @@ if (typeof module === 'object') {
             return this;
         },
 
-        bindTab: function (index) {
-            this.elements[index].addEventListener('keydown', function (e) {
+        bindTab: function(index) {
+            this.elements[index].addEventListener('keydown', function(e) {
                 if (e.which === 9) {
                     // Override tab only for pre nodes
                     var tag = getSelectionStart().tagName.toLowerCase();
@@ -278,7 +278,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        buttonTemplate: function (btnType) {
+        buttonTemplate: function(btnType) {
             var buttonLabels = this.getButtonLabels(this.options.buttonLabels),
                 buttonTemplates = {
                     'bold': '<button class="medium-editor-action medium-editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
@@ -302,7 +302,7 @@ if (typeof module === 'object') {
         },
 
         // TODO: break method
-        getButtonLabels: function (buttonLabelType) {
+        getButtonLabels: function(buttonLabelType) {
             var customButtonLabels,
                 attrname,
                 buttonLabels = {
@@ -351,7 +351,7 @@ if (typeof module === 'object') {
             return buttonLabels;
         },
 
-        initToolbar: function () {
+        initToolbar: function() {
             if (this.toolbar) {
                 return this;
             }
@@ -365,7 +365,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        createToolbar: function () {
+        createToolbar: function() {
             var toolbar = document.createElement('div');
             toolbar.id = 'medium-editor-toolbar-' + this.id;
             toolbar.className = 'medium-editor-toolbar';
@@ -376,7 +376,7 @@ if (typeof module === 'object') {
         },
 
         //TODO: actionTemplate
-        toolbarButtons: function () {
+        toolbarButtons: function() {
             var btns = this.options.buttons,
                 ul = document.createElement('ul'),
                 li,
@@ -409,7 +409,7 @@ if (typeof module === 'object') {
             return ul;
         },
 
-        toolbarFormAnchor: function () {
+        toolbarFormAnchor: function() {
             var anchor = document.createElement('div'),
                 input = document.createElement('input'),
                 a = document.createElement('a');
@@ -428,12 +428,12 @@ if (typeof module === 'object') {
             return anchor;
         },
 
-        bindSelect: function () {
+        bindSelect: function() {
             var self = this,
                 timer = '',
                 i;
 
-            this.checkSelectionWrapper = function (e) {
+            this.checkSelectionWrapper = function(e) {
 
                 // Do not close the toolbar when bluring the editable area and clicking into the anchor form
                 if (e && self.clickingIntoArchorForm(e)) {
@@ -441,7 +441,7 @@ if (typeof module === 'object') {
                 }
 
                 clearTimeout(timer);
-                timer = setTimeout(function () {
+                timer = setTimeout(function() {
                     self.checkSelection();
                 }, self.options.delay);
             };
@@ -455,7 +455,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        checkSelection: function () {
+        checkSelection: function() {
             var newSelection,
                 selectionElement;
 
@@ -476,7 +476,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        clickingIntoArchorForm: function (e) {
+        clickingIntoArchorForm: function(e) {
             var self = this;
             if (e.type && e.type.toLowerCase() === 'blur' && e.relatedTarget && e.relatedTarget === self.anchorInput) {
                 return true;
@@ -484,14 +484,14 @@ if (typeof module === 'object') {
             return false;
         },
 
-        hasMultiParagraphs: function () {
+        hasMultiParagraphs: function() {
             var selectionHtml = getSelectionHtml().replace(/<[\S]+><\/[\S]+>/gim, ''),
                 hasMultiParagraphs = selectionHtml.match(/<(p|h[0-6]|blockquote)>([\s\S]*?)<\/(p|h[0-6]|blockquote)>/g);
 
             return (hasMultiParagraphs ? hasMultiParagraphs.length : 0);
         },
 
-        checkSelectionElement: function (newSelection, selectionElement) {
+        checkSelectionElement: function(newSelection, selectionElement) {
             var i;
             this.selection = newSelection;
             this.selectionRange = this.selection.getRangeAt(0);
@@ -506,11 +506,11 @@ if (typeof module === 'object') {
             this.hideToolbarActions();
         },
 
-        getSelectionElement: function () {
+        getSelectionElement: function() {
             var selection = window.getSelection(),
                 range, current, parent,
                 result,
-                getMediumElement = function (e) {
+                getMediumElement = function(e) {
                     var localParent = e;
                     try {
                         while (!localParent.getAttribute('data-medium-element')) {
@@ -539,7 +539,7 @@ if (typeof module === 'object') {
             return result;
         },
 
-        setToolbarPosition: function () {
+        setToolbarPosition: function() {
             var buttonHeight = 50,
                 selection = window.getSelection(),
                 range = selection.getRangeAt(0),
@@ -569,7 +569,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        setToolbarButtonStates: function () {
+        setToolbarButtonStates: function() {
             var buttons = this.toolbarActions.querySelectorAll('button'),
                 i;
             for (i = 0; i < buttons.length; i += 1) {
@@ -579,7 +579,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        checkActiveButtons: function () {
+        checkActiveButtons: function() {
             var elements = Array.prototype.slice.call(this.elements),
                 parentNode = this.selection.anchorNode;
             if (!parentNode.tagName) {
@@ -597,18 +597,18 @@ if (typeof module === 'object') {
             }
         },
 
-        activateButton: function (tag) {
+        activateButton: function(tag) {
             var el = this.toolbar.querySelector('[data-element="' + tag + '"]');
             if (el !== null && el.className.indexOf('medium-editor-button-active') === -1) {
                 el.className += ' medium-editor-button-active';
             }
         },
 
-        bindButtons: function () {
+        bindButtons: function() {
             var buttons = this.toolbar.querySelectorAll('button'),
                 i,
                 self = this,
-                triggerAction = function (e) {
+                triggerAction = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     if (self.selection === undefined) {
@@ -630,7 +630,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        setFirstAndLastItems: function (buttons) {
+        setFirstAndLastItems: function(buttons) {
             if (buttons.length > 0) {
                 buttons[0].className += ' medium-editor-button-first';
                 buttons[buttons.length - 1].className += ' medium-editor-button-last';
@@ -638,7 +638,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        execAction: function (action, e) {
+        execAction: function(action, e) {
             if (action.indexOf('append-') > -1) {
                 this.execFormatBlock(action.replace('append-', ''));
                 this.setToolbarPosition();
@@ -653,7 +653,7 @@ if (typeof module === 'object') {
             }
         },
 
-        triggerAnchorAction: function () {
+        triggerAnchorAction: function() {
             if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a') {
                 document.execCommand('unlink', false, null);
             } else {
@@ -666,7 +666,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        execFormatBlock: function (el) {
+        execFormatBlock: function(el) {
             var selectionData = this.getSelectionData(this.selection.anchorNode);
             // FF handles blockquote differently on formatBlock
             // allowing nesting, we need to use outdent
@@ -691,7 +691,7 @@ if (typeof module === 'object') {
             return document.execCommand('formatBlock', false, el);
         },
 
-        getSelectionData: function (el) {
+        getSelectionData: function(el) {
             var tagName;
 
             if (el && el.tagName) {
@@ -711,7 +711,7 @@ if (typeof module === 'object') {
             };
         },
 
-        getFirstChild: function (el) {
+        getFirstChild: function(el) {
             var firstChild = el.firstChild;
             while (firstChild !== null && firstChild.nodeType !== 1) {
                 firstChild = firstChild.nextSibling;
@@ -719,28 +719,28 @@ if (typeof module === 'object') {
             return firstChild;
         },
 
-        hideToolbarActions: function () {
+        hideToolbarActions: function() {
             this.keepToolbarAlive = false;
             if (this.toolbar !== undefined) {
                 this.toolbar.classList.remove('medium-editor-toolbar-active');
             }
         },
 
-        showToolbarActions: function () {
+        showToolbarActions: function() {
             var self = this,
                 timer;
             this.anchorForm.style.display = 'none';
             this.toolbarActions.style.display = 'block';
             this.keepToolbarAlive = false;
             clearTimeout(timer);
-            timer = setTimeout(function () {
+            timer = setTimeout(function() {
                 if (self.toolbar && !self.toolbar.classList.contains('medium-editor-toolbar-active')) {
                     self.toolbar.classList.add('medium-editor-toolbar-active');
                 }
             }, 100);
         },
 
-        showAnchorForm: function (link_value) {
+        showAnchorForm: function(link_value) {
             this.toolbarActions.style.display = 'none';
             this.savedSelection = saveSelection();
             this.anchorForm.style.display = 'block';
@@ -749,28 +749,28 @@ if (typeof module === 'object') {
             this.anchorInput.value = link_value || '';
         },
 
-        bindAnchorForm: function () {
+        bindAnchorForm: function() {
             var linkCancel = this.anchorForm.querySelector('a'),
                 self = this;
-            this.anchorForm.addEventListener('click', function (e) {
+            this.anchorForm.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
-            this.anchorInput.addEventListener('keyup', function (e) {
+            this.anchorInput.addEventListener('keyup', function(e) {
                 if (e.keyCode === 13) {
                     e.preventDefault();
                     self.createLink(this);
                 }
             });
-            this.anchorInput.addEventListener('click', function (e) {
+            this.anchorInput.addEventListener('click', function(e) {
                 // make sure not to hide form when cliking into the input
                 e.stopPropagation();
                 self.keepToolbarAlive = true;
             });
-            this.anchorInput.addEventListener('blur', function () {
+            this.anchorInput.addEventListener('blur', function() {
                 self.keepToolbarAlive = false;
                 self.checkSelection();
             });
-            linkCancel.addEventListener('click', function (e) {
+            linkCancel.addEventListener('click', function(e) {
                 e.preventDefault();
                 self.showToolbarActions();
                 restoreSelection(self.savedSelection);
@@ -779,12 +779,12 @@ if (typeof module === 'object') {
         },
 
 
-        hideAnchorPreview: function () {
+        hideAnchorPreview: function() {
             this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
         },
 
         // TODO: break method
-        showAnchorPreview: function (anchor_el) {
+        showAnchorPreview: function(anchor_el) {
             if (this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
                 return true;
             }
@@ -802,7 +802,7 @@ if (typeof module === 'object') {
             defaultLeft = self.options.diffLeft - halfOffsetWidth;
 
             clearTimeout(timer);
-            timer = setTimeout(function () {
+            timer = setTimeout(function() {
                 if (self.anchorPreview && !self.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
                     self.anchorPreview.classList.add('medium-editor-anchor-preview-active');
                 }
@@ -825,20 +825,20 @@ if (typeof module === 'object') {
         },
 
         // TODO: break method
-        observeAnchorPreview: function (anchorEl) {
+        observeAnchorPreview: function(anchorEl) {
             var self = this,
                 lastOver = (new Date()).getTime(),
                 over = true,
-                stamp = function () {
+                stamp = function() {
                     lastOver = (new Date()).getTime();
                     over = true;
                 },
-                unstamp = function (e) {
+                unstamp = function(e) {
                     if (!e.relatedTarget || !/anchor-preview/.test(e.relatedTarget.className)) {
                         over = false;
                     }
                 },
-                interval_timer = setInterval(function () {
+                interval_timer = setInterval(function() {
                     if (over) {
                         return true;
                     }
@@ -863,7 +863,7 @@ if (typeof module === 'object') {
             anchorEl.addEventListener('mouseout', unstamp);
         },
 
-        createAnchorPreview: function () {
+        createAnchorPreview: function() {
             var self = this,
                 anchorPreview = document.createElement('div');
 
@@ -872,20 +872,20 @@ if (typeof module === 'object') {
             anchorPreview.innerHTML = this.anchorPreviewTemplate();
             document.body.appendChild(anchorPreview);
 
-            anchorPreview.addEventListener('click', function () {
+            anchorPreview.addEventListener('click', function() {
                 self.anchorPreviewClickHandler();
             });
 
             return anchorPreview;
         },
 
-        anchorPreviewTemplate: function () {
+        anchorPreviewTemplate: function() {
             return '<div class="medium-editor-toolbar-anchor-preview" id="medium-editor-toolbar-anchor-preview">' +
                 '    <i class="medium-editor-toolbar-anchor-preview-inner"></i>' +
                 '</div>';
         },
 
-        anchorPreviewClickHandler: function (e) {
+        anchorPreviewClickHandler: function(e) {
             if (this.activeAnchor) {
 
                 var self = this,
@@ -895,7 +895,7 @@ if (typeof module === 'object') {
                 range.selectNodeContents(self.activeAnchor);
                 sel.removeAllRanges();
                 sel.addRange(range);
-                setTimeout(function () {
+                setTimeout(function() {
                     if (self.activeAnchor) {
                         self.showAnchorForm(self.activeAnchor.href);
                     }
@@ -907,10 +907,10 @@ if (typeof module === 'object') {
             this.hideAnchorPreview();
         },
 
-        editorAnchorObserver: function (e) {
+        editorAnchorObserver: function(e) {
             var self = this,
                 overAnchor = true,
-                leaveAnchor = function () {
+                leaveAnchor = function() {
                     // mark the anchor as no longer hovered, and stop listening
                     overAnchor = false;
                     self.activeAnchor.removeEventListener('mouseout', leaveAnchor);
@@ -934,7 +934,7 @@ if (typeof module === 'object') {
                 this.activeAnchor.addEventListener('mouseout', leaveAnchor);
                 // show the anchor preview according to the configured delay
                 // if the mouse has not left the anchor tag in that time
-                setTimeout(function () {
+                setTimeout(function() {
                     if (overAnchor) {
                         self.showAnchorPreview(e.target);
                     }
@@ -944,9 +944,9 @@ if (typeof module === 'object') {
             }
         },
 
-        bindAnchorPreview: function (index) {
+        bindAnchorPreview: function(index) {
             var i, self = this;
-            this.editorAnchorObserverWrapper = function (e) {
+            this.editorAnchorObserverWrapper = function(e) {
                 self.editorAnchorObserver(e);
             };
             for (i = 0; i < this.elements.length; i += 1) {
@@ -955,7 +955,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        checkLinkFormat: function (value) {
+        checkLinkFormat: function(value) {
             var re = /^https?:\/\//;
             if (value.match(re)) {
                 return value;
@@ -963,7 +963,7 @@ if (typeof module === 'object') {
             return "http://" + value;
         },
 
-        setTargetBlank: function () {
+        setTargetBlank: function() {
             var el = getSelectionStart(),
                 i;
             if (el.tagName.toLowerCase() === 'a') {
@@ -976,7 +976,7 @@ if (typeof module === 'object') {
             }
         },
 
-        createLink: function (input) {
+        createLink: function(input) {
             restoreSelection(this.savedSelection);
             if (this.options.checkLinkFormat) {
                 input.value = this.checkLinkFormat(input.value);
@@ -989,12 +989,12 @@ if (typeof module === 'object') {
             input.value = '';
         },
 
-        bindWindowActions: function () {
+        bindWindowActions: function() {
             var timerResize,
                 self = this;
-            this.windowResizeHandler = function () {
+            this.windowResizeHandler = function() {
                 clearTimeout(timerResize);
-                timerResize = setTimeout(function () {
+                timerResize = setTimeout(function() {
                     if (self.toolbar && self.toolbar.classList.contains('medium-editor-toolbar-active')) {
                         self.setToolbarPosition();
                     }
@@ -1004,7 +1004,7 @@ if (typeof module === 'object') {
             return this;
         },
 
-        activate: function () {
+        activate: function() {
             if (this.isActive) {
                 return;
             }
@@ -1013,7 +1013,7 @@ if (typeof module === 'object') {
         },
 
         // TODO: break method
-        deactivate: function () {
+        deactivate: function() {
             var i;
             if (!this.isActive) {
                 return;
@@ -1041,15 +1041,15 @@ if (typeof module === 'object') {
 
         },
 
-        htmlEntities: function (str) {
+        htmlEntities: function(str) {
             // converts special characters (like <) into their escaped/encoded values (like &lt;).
             // This allows you to show to display the string without the browser reading it as HTML.
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         },
 
-        bindPaste: function () {
+        bindPaste: function() {
             var i, self = this;
-            this.pasteWrapper = function (e) {
+            this.pasteWrapper = function(e) {
                 var paragraphs,
                     html = '',
                     p;
@@ -1088,28 +1088,26 @@ if (typeof module === 'object') {
             return this;
         },
 
-        setPlaceholders: function () {
+        setPlaceholders: function() {
             var i,
-                activatePlaceholder = function (el) {
+                activatePlaceholder = function(el) {
                     if (el.textContent.replace(/^\s+|\s+$/g, '') === '') {
                         el.classList.add('medium-editor-placeholder');
                     }
                 },
-                placeholderWrapper = function (e) {
+                placeholderWrapper = function(e) {
                     this.classList.remove('medium-editor-placeholder');
-                    if (e.type !== 'keypress') {
-                        activatePlaceholder(this);
-                    }
+                    activatePlaceholder(this);
                 };
             for (i = 0; i < this.elements.length; i += 1) {
                 activatePlaceholder(this.elements[i]);
                 this.elements[i].addEventListener('blur', placeholderWrapper);
-                this.elements[i].addEventListener('keypress', placeholderWrapper);
+                this.elements[i].addEventListener('input', placeholderWrapper);
             }
             return this;
         },
 
-        cleanPaste: function (text) {
+        cleanPaste: function(text) {
 
             /*jslint regexp: true*/
             /*
@@ -1127,7 +1125,7 @@ if (typeof module === 'object') {
                     [new RegExp(/<[^>]*docs-internal-guid[^>]*>/gi), ""],
                     [new RegExp(/<\/b>(<br[^>]*>)?$/gi), ""],
 
-                     // un-html spaces and newlines inserted by OS X
+                    // un-html spaces and newlines inserted by OS X
                     [new RegExp(/<span class="Apple-converted-space">\s+<\/span>/g), ' '],
                     [new RegExp(/<br class="Apple-interchange-newline">/g), '<br>'],
 
@@ -1140,10 +1138,10 @@ if (typeof module === 'object') {
                     //[replace google docs bolds with a span to be replaced once the html is inserted
                     [new RegExp(/<span[^>]*font-weight:bold[^>]*>/gi), '<span class="replace-with bold">'],
 
-                     // replace manually entered b/i/a tags with real ones
+                    // replace manually entered b/i/a tags with real ones
                     [new RegExp(/&lt;(\/?)(i|b|a)&gt;/gi), '<$1$2>'],
 
-                     // replace manually a tags with real ones, converting smart-quotes from google docs
+                    // replace manually a tags with real ones, converting smart-quotes from google docs
                     [new RegExp(/&lt;a\s+href=(&quot;|&rdquo;|&ldquo;|“|”)([^&]+)(&quot;|&rdquo;|&ldquo;|“|”)&gt;/gi), '<a href="$2">']
 
                 ];
@@ -1168,13 +1166,13 @@ if (typeof module === 'object') {
                     workEl = elList[i];
 
                     switch (workEl.tagName.toLowerCase()) {
-                    case 'p':
-                    case 'div':
-                        this.filterCommonBlocks(workEl);
-                        break;
-                    case 'br':
-                        this.filterLineBreak(workEl);
-                        break;
+                        case 'p':
+                        case 'div':
+                            this.filterCommonBlocks(workEl);
+                            break;
+                        case 'br':
+                            this.filterLineBreak(workEl);
+                            break;
                     }
 
                 }
@@ -1188,7 +1186,7 @@ if (typeof module === 'object') {
 
         },
 
-        pasteHTML: function (html) {
+        pasteHTML: function(html) {
             var elList, workEl, i, fragmentBody, pasteBlock = document.createDocumentFragment();
 
             pasteBlock.appendChild(document.createElement('body'));
@@ -1215,15 +1213,15 @@ if (typeof module === 'object') {
             }
             document.execCommand('insertHTML', false, fragmentBody.innerHTML.replace(/&nbsp;/g, ' '));
         },
-        isCommonBlock: function (el) {
+        isCommonBlock: function(el) {
             return (el && (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div'));
         },
-        filterCommonBlocks: function (el) {
+        filterCommonBlocks: function(el) {
             if (/^\s*$/.test(el.innerText)) {
                 el.parentNode.removeChild(el);
             }
         },
-        filterLineBreak: function (el) {
+        filterLineBreak: function(el) {
             if (this.isCommonBlock(el.previousElementSibling)) {
 
                 // remove stray br's following common block elements
@@ -1244,7 +1242,7 @@ if (typeof module === 'object') {
         },
 
         // remove an element, including its parent, if it is the only element within its parent
-        removeWithParent: function (el) {
+        removeWithParent: function(el) {
             if (el && el.parentNode) {
                 if (el.parentNode.parentNode && el.parentNode.childElementCount === 1) {
                     el.parentNode.parentNode.removeChild(el.parentNode);
@@ -1254,7 +1252,7 @@ if (typeof module === 'object') {
             }
         },
 
-        cleanupSpans: function (container_el) {
+        cleanupSpans: function(container_el) {
 
             var i,
                 el,
